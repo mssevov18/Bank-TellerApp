@@ -23,10 +23,7 @@ namespace TellerApp.Models.Pages
 	/// </summary>
 	public partial class LogInPage : Page, IPage
 	{
-		public LogInPage()
-		{
-			InitializeComponent();
-		}
+		public LogInPage() => InitializeComponent();
 		public LogInPage(string name, IWindow owner)
 		{
 			_name = name;
@@ -35,7 +32,7 @@ namespace TellerApp.Models.Pages
 			InitializeComponent();
 		}
 
-		string _name;
+		string _name = String.Empty;
 		string IPage.Name { get => _name; set => _name = value; }
 
 		IWindow _owner;
@@ -49,20 +46,24 @@ namespace TellerApp.Models.Pages
 			////THIS IS HERE TO TEST DB CONNECTION
 			using (BankDBContext dBContext = new BankDBContext())
 			{
-				if (UsernameTextBox.Text != null &&
+				if (UsernameTextBox.Text != String.Empty &&
+					PasswordTextBox.Password != String.Empty &&
 					dBContext.BankWorkers
-					.Select(bw => bw.Username)
-					.ToList<string>()
-					.Contains(UsernameTextBox.Text))
+						.Where(bw => bw != null && bw.Username == UsernameTextBox.Text)
+						.FirstOrDefault<BankWorker>()
+						.Password == PasswordTextBox.Password)
 				{
-					if (PasswordTextBox.Password != null &&
-						dBContext.BankWorkers
-						.Select(bw => new Tuple<string, string>(bw.Username, bw.Password))
-						.ToList().FirstOrDefault()
-						.Item2 == PasswordTextBox.Password)
-						_owner.RequestChange("main");
+					e.Handled = true;
+					_owner.RequestChange("main");
 				}
 			}
 		}
+
+		public void Clear()
+		{
+			UsernameTextBox.Clear();
+			PasswordTextBox.Clear();
+		}
 	}
 }
+

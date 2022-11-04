@@ -45,6 +45,11 @@ namespace TellerApp.Models.Pages
 			_owner.RequestChange("login");
 		}
 
+		public void Clear()
+		{
+
+		}
+
 		public double DesiredWidth => 800;
 		public double DesiredHeight => 500;
 	}

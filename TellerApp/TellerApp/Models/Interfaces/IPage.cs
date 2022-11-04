@@ -13,5 +13,10 @@ namespace TellerApp.Models.Interfaces
 
 		public double DesiredWidth { get; }
 		public double DesiredHeight { get; }
+
+		/// <summary>
+		/// Forces all Page inputs to empty values
+		/// </summary>
+		public void Clear();
 	}
 }
