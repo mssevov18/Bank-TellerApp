@@ -24,6 +24,7 @@ namespace TellerApp
 	public partial class MainWindow : Window, IWindow
 	{
 		Dictionary<string, IPage> _pages = new Dictionary<string, IPage>();
+		string _loadedPage;
 
 		public MainWindow()
 		{
@@ -42,7 +43,10 @@ namespace TellerApp
 			if (!_pages.ContainsKey(pageName))
 				throw new ArgumentException($"{pageName} is not a valid page!");
 
-			ContentFrame.Content = _pages[pageName];
+			if (_loadedPage != null)
+				_pages[_loadedPage].Clear();
+
+			ContentFrame.Content = _pages[_loadedPage = pageName];
 			this.Width = _pages[pageName].DesiredWidth;
 			this.Height = _pages[pageName].DesiredHeight;
 		}
