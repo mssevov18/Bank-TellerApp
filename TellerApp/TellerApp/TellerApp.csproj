@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Classes\" />
-    <Folder Include="Models\UserControls\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

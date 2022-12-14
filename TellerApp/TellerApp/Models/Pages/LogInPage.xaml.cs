@@ -23,6 +23,7 @@ namespace TellerApp.Models.Pages
 	/// </summary>
 	public partial class LogInPage : Page, IPage
 	{
+		#region Constructors
 		public LogInPage() => InitializeComponent();
 		public LogInPage(string name, IWindow owner)
 		{
@@ -31,26 +32,52 @@ namespace TellerApp.Models.Pages
 
 			InitializeComponent();
 		}
+		#endregion
 
+		#region IPage definitions
 		string _name = String.Empty;
 		string IPage.Name { get => _name; set => _name = value; }
 
-		IWindow _owner;
-		IWindow IPage.Owner { get => _owner; set => _owner = value; }
+		IWindow? _owner;
+		IWindow IPage.Owner
+		{
+			get
+			{
+				if (_owner == null)
+					throw _nullOwner;
+				return _owner;
+			}
+			set => _owner = value;
+		}
+		Exception _nullOwner = new NullReferenceException("_owner in LogInPage is null");
 
 		public double DesiredWidth => 250;
 		public double DesiredHeight => 300;
 
+		#region IClearable
+		public void Clear()
+		{
+			UsernameTextBox.Clear();
+			PasswordTextBox.Clear();
+		}
+		#endregion
+
+		#endregion
+
+		#region Buttons
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
+			if (_owner == null)
+				throw _nullOwner;
+
 			////THIS IS HERE TO TEST DB CONNECTION
 			using (BankDBContext dBContext = new BankDBContext())
 			{
-				if (UsernameTextBox.Text != String.Empty &&
+				if (UsernameTextBox.Text     != String.Empty &&
 					PasswordTextBox.Password != String.Empty &&
 					dBContext.BankWorkers
 						.Where(bw => bw != null && bw.Username == UsernameTextBox.Text)
-						.FirstOrDefault<BankWorker>()
+						.FirstOrDefault()
 						.Password == PasswordTextBox.Password)
 				{
 					e.Handled = true;
@@ -58,12 +85,7 @@ namespace TellerApp.Models.Pages
 				}
 			}
 		}
-
-		public void Clear()
-		{
-			UsernameTextBox.Clear();
-			PasswordTextBox.Clear();
-		}
+		#endregion
 	}
 }
 

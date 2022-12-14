@@ -1,0 +1,27 @@
+﻿# To Do
+[] Log in page
+	[x] Functionality
+	[] Split into User Controls
+	[] Visuals
+	[] Input Validation
+[] Main page
+	???
+[] Data page
+	[] Data access
+		[] Person
+		[] Account
+		[] Worker
+		[] Transaction
+		[] ???
+	[] Data manipulation
+		[] Person
+		[] Account
+		[] Worker
+		[] Transaction
+		[] ???
+	[] Data addition
+		[] Person
+		[] Account
+		[] Worker
+		[] Transaction
+		[] ???

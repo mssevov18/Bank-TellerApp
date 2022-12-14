@@ -4,10 +4,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TellerApp.Models.Pages"
+	  xmlns:uc="clr-namespace:TellerApp.Models.UserControls"
       mc:Ignorable="d" 
       Title="MainPage">
     <Grid>
         <TextBlock> hi</TextBlock>
-        <Button Name="Change" Content="Change" Click="Change_Click"/>
-    </Grid>
+		<uc:ucPerson/>
+	</Grid>
 </Page>

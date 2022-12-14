@@ -21,10 +21,8 @@ namespace TellerApp.Models.Pages
 	/// </summary>
 	public partial class MainPage : Page, IPage
 	{
-		public MainPage()
-		{
-			InitializeComponent();
-		}
+		#region Constructors
+		public MainPage() => InitializeComponent();
 		public MainPage(string name, IWindow owner)
 		{
 			_name = name;
@@ -32,25 +30,35 @@ namespace TellerApp.Models.Pages
 
 			InitializeComponent();
 		}
+		#endregion
 
-		string _name;
+		#region IPage definitions
+		string _name = String.Empty;
 		string IPage.Name { get => _name; set => _name = value; }
 
-		IWindow _owner;
-		IWindow IPage.Owner { get => _owner; set => _owner = value; }
-		
-		private void Change_Click(object sender, RoutedEventArgs e)
+		IWindow? _owner;
+		IWindow IPage.Owner
 		{
-			////THIS IS HERE TO TEST DB CONNECTION
-			_owner.RequestChange("login");
+			get
+			{
+				if (_owner == null)
+					throw _nullOwner;
+				return _owner;
+			}
+			set => _owner = value;
 		}
+		Exception _nullOwner = new NullReferenceException("_owner in LogInPage is null");
 
+		public double DesiredWidth => 800;
+		public double DesiredHeight => 500;
+
+		#region IClearable
 		public void Clear()
 		{
 
 		}
+		#endregion
+		#endregion
 
-		public double DesiredWidth => 800;
-		public double DesiredHeight => 500;
 	}
 }

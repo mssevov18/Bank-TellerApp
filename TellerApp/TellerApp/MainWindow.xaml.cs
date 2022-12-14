@@ -23,9 +23,7 @@ namespace TellerApp
 	/// </summary>
 	public partial class MainWindow : Window, IWindow
 	{
-		Dictionary<string, IPage> _pages = new Dictionary<string, IPage>();
-		string _loadedPage;
-
+		#region Constructors
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -35,8 +33,22 @@ namespace TellerApp
 
 			ChangePage("login");
 		}
+		#endregion
 
+		#region IWindow definitions
 		public Dictionary<string, IPage> GetPages => _pages;
+
+		void IWindow.RequestChange(string page)
+		{
+			ChangePage(page);
+		}
+		#endregion
+
+		#region Variables
+		Dictionary<string, IPage> _pages = new Dictionary<string, IPage>();
+		string _loadedPage;
+
+		#endregion
 
 		public void ChangePage(string pageName)
 		{
@@ -49,11 +61,6 @@ namespace TellerApp
 			ContentFrame.Content = _pages[_loadedPage = pageName];
 			this.Width = _pages[pageName].DesiredWidth;
 			this.Height = _pages[pageName].DesiredHeight;
-		}
-
-		void IWindow.RequestChange(string page)
-		{
-			ChangePage(page);
 		}
 	}
 }
